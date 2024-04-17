@@ -22,6 +22,12 @@ jobs:
       run: npm install
 
     - name: Build Docker Image
-      run: |
-        docker build -t my-node-app .
-        docker run -d -p 8080:8080 my-node-app
+      run: docker build -t my-node-app . && docker image prune -f
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Preparation and cleanup for deploy
+        run:  docker rm -f $(docker ps -a -q) || echo "No containers available for cleaning"
+      - name: Deploy the Docker image
+        run: docker run -d -p 8080:8080 my-node-app
