@@ -2,10 +2,7 @@ name: Node.js CI/CD
 
 on:
   push:
-    branches: [ feature, develop ]
-  pull_request:
-    branches: [ main ]
-
+    branches: [ feature, develop, main ]
 
 jobs:
   build:
